@@ -13,10 +13,10 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logging/logging.dart';
+import 'package:path/path.dart' as path_helper;
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
-import 'package:path/path.dart' as path_helper;
 
 import '../components/PlayerScreen/queue_source_helper.dart';
 import 'downloads_service.dart';
@@ -79,7 +79,7 @@ class QueueService {
   int _saveUpdateCycleCount = 0;
   bool _saveUpdateImmediate = false;
   SavedQueueState _savedQueueState = SavedQueueState.preInit;
-  FinampStorableQueueInfo? _failedSavedQueue = null;
+  FinampStorableQueueInfo? _failedSavedQueue;
   static const int _maxSavedQueues = 60;
 
   QueueService() {

@@ -47,7 +47,9 @@ class FinampUser {
 
   // We only need 1 user, the current user
   final Id isarId = 0;
+
   String get isarViews => jsonEncode(views);
+
   set isarViews(String json) =>
       views = (jsonDecode(json) as Map<String, dynamic>)
           .map((k, v) => MapEntry(k, BaseItemDto.fromJson(v)));
@@ -1078,6 +1080,7 @@ class DownloadStub {
 
   factory DownloadStub.fromJson(Map<String, dynamic> json) =>
       _$DownloadStubFromJson(json);
+
   Map<String, dynamic> toJson() => _$DownloadStubToJson(this);
 }
 
@@ -1421,6 +1424,11 @@ class OfflineListen {
   // The MusicBrainz ID of the track, if available.
   @HiveField(6)
   String? trackMbid;
+
+  @override
+  String toString() {
+    return "OfflineListen: $name by $artist from $album at $timestamp";
+  }
 }
 
 @HiveType(typeId: 50)
@@ -1679,7 +1687,9 @@ class FinampQueueInfo {
 
   int get currentTrackIndex =>
       previousTracks.length + (currentTrack == null ? 0 : 1);
+
   int get remainingTrackCount => nextUp.length + queue.length;
+
   int get trackCount => currentTrackIndex + remainingTrackCount;
 
   /// Remaining duration of queue.  Does not consider position in current track.
@@ -2074,6 +2084,7 @@ class FinampCollection {
 
   factory FinampCollection.fromJson(Map<String, dynamic> json) =>
       _$FinampCollectionFromJson(json);
+
   Map<String, dynamic> toJson() => _$FinampCollectionToJson(this);
 }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:finamp/services/music_player_background_task.dart';
 import 'package:finamp/services/queue_service.dart';
@@ -8,11 +9,11 @@ import 'package:logging/logging.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'jellyfin_api_helper.dart';
-import 'finamp_settings_helper.dart';
-import 'offline_listen_helper.dart';
 import '../models/finamp_models.dart';
 import '../models/jellyfin_models.dart' as jellyfin_models;
+import 'finamp_settings_helper.dart';
+import 'jellyfin_api_helper.dart';
+import 'offline_listen_helper.dart';
 
 /// A track queueing service for Finamp.
 class PlaybackHistoryService {
@@ -175,7 +176,8 @@ class PlaybackHistoryService {
     // }
   }
 
-  get history => _history;
+  List<FinampHistoryItem> get history => _history;
+
   BehaviorSubject<List<FinampHistoryItem>> get historyStream => _historyStream;
 
   void _resetPeriodicUpdates() {
@@ -192,7 +194,7 @@ class PlaybackHistoryService {
   /// method that converts history into a list grouped by date
   List<MapEntry<DateTime, List<FinampHistoryItem>>>
       getHistoryGroupedDynamically() {
-    byDateGroupingConstructor(FinampHistoryItem element) {
+    DateTime byDateGroupingConstructor(FinampHistoryItem element) {
       final now = DateTime.now();
       if (now.year == element.startTime.year &&
           now.month == element.startTime.month &&
@@ -230,7 +232,7 @@ class PlaybackHistoryService {
 
   /// method that converts history into a list grouped by date
   List<MapEntry<DateTime, List<FinampHistoryItem>>> getHistoryGroupedByDate() {
-    byDateGroupingConstructor(FinampHistoryItem element) {
+    DateTime byDateGroupingConstructor(FinampHistoryItem element) {
       return DateTime(
         element.startTime.year,
         element.startTime.month,
@@ -243,7 +245,7 @@ class PlaybackHistoryService {
 
   /// method that converts history into a list grouped by hour
   List<MapEntry<DateTime, List<FinampHistoryItem>>> getHistoryGroupedByHour() {
-    byHourGroupingConstructor(FinampHistoryItem element) {
+    DateTime byHourGroupingConstructor(FinampHistoryItem element) {
       return DateTime(
         element.startTime.year,
         element.startTime.month,

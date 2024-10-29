@@ -19,15 +19,11 @@ class PlaybackHistoryList extends StatelessWidget {
     final playbackHistoryService = GetIt.instance<PlaybackHistoryService>();
     final audioServiceHelper = GetIt.instance<AudioServiceHelper>();
 
-    List<FinampHistoryItem>? history;
-    List<MapEntry<DateTime, List<FinampHistoryItem>>> groupedHistory;
-
     return StreamBuilder<List<FinampHistoryItem>>(
         stream: playbackHistoryService.historyStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            history = snapshot.data;
-            groupedHistory =
+            final groupedHistory =
                 playbackHistoryService.getHistoryGroupedDynamically();
 
             return CustomScrollView(
